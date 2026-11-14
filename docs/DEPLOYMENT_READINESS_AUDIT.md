@@ -752,3 +752,56 @@ Initial record counts in Neon production database:
 - **Execution:** `npx tsx scripts/verify-neon-connection.ts` validates live connection, schema tables, and counts.
 - **Build Status:** `npm run build` passes with exit code 0.
 
+---
+
+# PART 14 — Phase 2B: Production Deployment Report (LIVE & VERIFIED)
+
+**Status:** Completed & Publicly Deployed  
+**Deployment Date:** November 14, 2026  
+
+### 1. Service A — Railway (Standalone WebSocket Server)
+- **Service Name:** `roomigo-ws`
+- **Project ID:** `9fdec898-eebb-4fcb-91d9-1d68cb824c22`
+- **Owner Account:** `Kartikey Joshi` (`kartikeyjoshi65@gmail.com`)
+- **Public Domain:** `https://roomigo-ws-production.up.railway.app`
+- **Public WSS:** `wss://roomigo-ws-production.up.railway.app`
+- **Start Command:** `npm run start:ws` (configured via `Procfile` and service manifest)
+- **Port:** `$PORT` (dynamically bound to `0.0.0.0:8080`)
+- **Health Endpoint:** `GET /health` verified live (HTTP 200 `{"status":"ok","service":"roomigo-ws","port":8080}`)
+- **Security Check:** Unauthenticated WebSocket handshake with invalid ticket rejected with HTTP 401 Unauthorized.
+- **CORS / Origin Enforcement:** Configured with `ALLOWED_ORIGINS` restricting handshakes to Vercel production domains.
+
+### 2. Service B — Vercel (Next.js Frontend & API Handlers)
+- **Project Name:** `roomigo`
+- **Owner Account:** `joshikartikey32-1408` (Team: `kartikeys-projects-2fe7d9d3`, Hobby Plan)
+- **GitHub Connection:** Continuous deployment linked to `https://github.com/Kartikey-xq/roomigo` (`main` branch)
+- **Live Production URLs:**
+  - Primary: `https://roomigo-eight.vercel.app`
+  - Team Alias: `https://roomigo-kartikeys-projects-2fe7d9d3.vercel.app`
+- **Verified Live Routes (HTTP 200):**
+  - Homepage / Listings: `https://roomigo-eight.vercel.app`
+  - Login Page: `https://roomigo-eight.vercel.app/login` (Demo fast-login cards verified completely absent)
+  - Signup Page: `https://roomigo-eight.vercel.app/signup`
+- **Verified Live APIs:**
+  - `GET /api/auth/session` -> `{"success":true,"authenticated":false,"data":null}`
+  - `POST /api/auth/ws-ticket` -> `401 Unauthorized` (protected route)
+  - `GET /api/listings` -> `{"success":true,"data":[],"pagination":{"totalCount":0}}` (connected to Neon production DB)
+
+### 3. Cross-Service Integration & Environment Configuration
+| Platform | Key | Purpose | Scope |
+|---|---|---|---|
+| **Railway** | `DATABASE_URL` | Neon pooled connection string | Server |
+| **Railway** | `NODE_ENV` | `production` | Server |
+| **Railway** | `ALLOWED_ORIGINS` | Vercel production domains | Server |
+| **Vercel** | `DATABASE_URL` | Neon pooled connection string | Server |
+| **Vercel** | `DIRECT_URL` | Neon direct unpooled connection string | Server |
+| **Vercel** | `NEXT_PUBLIC_WS_URL` | `wss://roomigo-ws-production.up.railway.app` | Client & Server |
+| **Vercel** | `NEXT_PUBLIC_APP_URL` | `https://roomigo-eight.vercel.app` | Client & Server |
+| **Vercel** | `SESSION_SECRET` | 64-byte hex cryptographic signing secret | Server |
+
+### 4. Database Integrity Verification
+- **Neon Database:** 100% clean and unpolluted (`users: 0, listings: 0, conversations: 0, tickets: 0`).
+- **Local Docker DB:** 100% intact (`users: 9, listings: 8, conversations: 2, messages: 11`).
+- **Zero Destructive Actions:** No `prisma db push`, `prisma migrate reset`, or seeding was executed.
+
+
