@@ -236,10 +236,23 @@ export default function ChatPage() {
     let reconnectTimeout: ReturnType<typeof setTimeout> | null = null;
     let isDisposed = false;
 
-    const connectWS = () => {
+    const connectWS = async () => {
       if (isDisposed) return;
       try {
-        const wsUrl = process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:3001";
+        // Request ephemeral single-use WebSocket ticket from authenticated session
+        const ticketRes = await fetch("/api/auth/ws-ticket", { method: "POST" });
+        if (!ticketRes.ok) {
+          if (!isDisposed) reconnectTimeout = setTimeout(connectWS, 3000);
+          return;
+        }
+        const ticketJson = await ticketRes.json();
+        if (!ticketJson.success || !ticketJson.data?.ticket) {
+          if (!isDisposed) reconnectTimeout = setTimeout(connectWS, 3000);
+          return;
+        }
+
+        const baseWsUrl = process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:3001";
+        const wsUrl = `${baseWsUrl}?token=${encodeURIComponent(ticketJson.data.ticket)}`;
         ws = new WebSocket(wsUrl);
         socketRef.current = ws;
 
