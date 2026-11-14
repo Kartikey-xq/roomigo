@@ -22,15 +22,21 @@ interface AuthenticatedSocket extends WebSocket {
   messageTimestamps: number[];
 }
 
-const server = http.createServer((_req, res) => {
-  res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(
-    JSON.stringify({
-      status: "Roomify WebSocket Server Running",
-      port: PORT,
-      timestamp: new Date().toISOString(),
-    })
-  );
+const server = http.createServer((req, res) => {
+  const pathname = url.parse(req.url || "/").pathname;
+  if (pathname === "/health" || pathname === "/" || pathname === "/status") {
+    res.writeHead(200, { "Content-Type": "application/json" });
+    return res.end(
+      JSON.stringify({
+        status: "ok",
+        service: "roomigo-ws",
+        port: PORT,
+        timestamp: new Date().toISOString(),
+      })
+    );
+  }
+  res.writeHead(404, { "Content-Type": "application/json" });
+  res.end(JSON.stringify({ error: "Not Found" }));
 });
 
 // Map roomName -> Set of AuthenticatedSockets
