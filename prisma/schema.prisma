@@ -1,6 +1,7 @@
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 generator client {
@@ -138,11 +139,13 @@ model User {
   role               UserRole           @default(STUDENT)
   isEmailVerified    Boolean            @default(false)
   isActive           Boolean            @default(true)
+  isDemo             Boolean            @default(false)
   createdAt          DateTime           @default(now())
   updatedAt          DateTime           @updatedAt
   deletedAt          DateTime?
 
   sessions           Session[]
+  wsTickets          WebSocketTicket[]
   studentProfile     StudentProfile?
   savedListings      SavedListing[]
   sentRequests       RoommateRequest[]  @relation("SentRequests")
@@ -157,19 +160,38 @@ model User {
 }
 
 model Session {
-  id           String    @id @default(uuid()) @db.Uuid
-  userId       String    @db.Uuid
-  tokenHash    String    @unique
+  id           String            @id @default(uuid()) @db.Uuid
+  userId       String            @db.Uuid
+  tokenHash    String            @unique
   userAgent    String?
   ipAddress    String?
   expiresAt    DateTime
   revokedAt    DateTime?
-  createdAt    DateTime  @default(now())
+  createdAt    DateTime          @default(now())
 
-  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wsTickets    WebSocketTicket[]
 
   @@index([userId])
   @@index([tokenHash])
+}
+
+model WebSocketTicket {
+  id           String            @id @default(uuid()) @db.Uuid
+  ticket       String            @unique
+  userId       String            @db.Uuid
+  sessionId    String            @db.Uuid
+  expiresAt    DateTime
+  usedAt       DateTime?
+  createdAt    DateTime          @default(now())
+
+  user         User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  session      Session           @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([ticket])
+  @@index([userId])
+  @@index([sessionId])
+  @@index([expiresAt])
 }
 
 // ==========================================

@@ -21,6 +21,12 @@ import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 async function main() {
+  if (process.env.NODE_ENV === "production") {
+    console.error("🛑 Refusing to run destructive deleteMany seed in production environment!");
+    console.error("In production, use targeted non-destructive migrations or listing seed scripts.");
+    throw new Error("Destructive seed script is blocked in production.");
+  }
+
   console.log("🌱 Cleaning existing data...");
   await prisma.savedListing.deleteMany();
   await prisma.bedConfiguration.deleteMany();
@@ -52,6 +58,7 @@ async function main() {
       passwordHash: adminPasswordHash,
       role: UserRole.ADMIN,
       isEmailVerified: true,
+      isDemo: true,
       studentProfile: {
         create: {
           fullName: "Roomify Admin",
@@ -76,6 +83,7 @@ async function main() {
       passwordHash: defaultPasswordHash,
       role: UserRole.STUDENT,
       isEmailVerified: true,
+      isDemo: true,
       studentProfile: {
         create: {
           fullName: "Kartikey Joshi",
@@ -120,6 +128,7 @@ async function main() {
       passwordHash: defaultPasswordHash,
       role: UserRole.STUDENT,
       isEmailVerified: true,
+      isDemo: true,
       studentProfile: {
         create: {
           fullName: "Aarav Sharma",
@@ -164,6 +173,7 @@ async function main() {
       passwordHash: defaultPasswordHash,
       role: UserRole.STUDENT,
       isEmailVerified: true,
+      isDemo: true,
       studentProfile: {
         create: {
           fullName: "Rohan Verma",
@@ -206,6 +216,7 @@ async function main() {
       passwordHash: defaultPasswordHash,
       role: UserRole.STUDENT,
       isEmailVerified: true,
+      isDemo: true,
       studentProfile: {
         create: {
           fullName: "Priya Nautiyal",
@@ -248,6 +259,7 @@ async function main() {
       passwordHash: defaultPasswordHash,
       role: UserRole.STUDENT,
       isEmailVerified: true,
+      isDemo: true,
       studentProfile: {
         create: {
           fullName: "Aditya Rawat",
@@ -290,6 +302,7 @@ async function main() {
       passwordHash: defaultPasswordHash,
       role: UserRole.STUDENT,
       isEmailVerified: true,
+      isDemo: true,
       studentProfile: {
         create: {
           fullName: "Ayush Bisht",
@@ -332,6 +345,7 @@ async function main() {
       passwordHash: defaultPasswordHash,
       role: UserRole.STUDENT,
       isEmailVerified: true,
+      isDemo: true,
       studentProfile: {
         create: {
           fullName: "Karan Singhal",
@@ -374,6 +388,7 @@ async function main() {
       passwordHash: defaultPasswordHash,
       role: UserRole.STUDENT,
       isEmailVerified: true,
+      isDemo: true,
       studentProfile: {
         create: {
           fullName: "Sneha Dobhal",

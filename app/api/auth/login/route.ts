@@ -49,6 +49,33 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    if (!user.isActive) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            code: "ACCOUNT_SUSPENDED",
+            message: "Your account is inactive or suspended. Please contact campus administration.",
+          },
+        },
+        { status: 403 }
+      );
+    }
+
+    // Security: Ensure demo credentials cannot access production environment
+    if (process.env.NODE_ENV === "production" && user.isDemo) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            code: "DEMO_ACCOUNTS_DISABLED",
+            message: "Test and demo accounts cannot be accessed in production. Please sign in with your registered student account.",
+          },
+        },
+        { status: 403 }
+      );
+    }
+
     const isMatch = await verifyPassword(password, user.passwordHash);
     if (!isMatch) {
       return NextResponse.json(

@@ -241,46 +241,48 @@ function LoginForm() {
         </div>
       </div>
 
-      {/* 1-Click Fast Student Test Accounts (Clean, Non-Intrusive Section) */}
-      <div className="mt-8 bg-zinc-50/90 rounded-3xl border border-zinc-200/80 p-5 space-y-3">
-        <div className="flex items-center justify-between">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-400 font-mono flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-            1-Click Student Test Accounts
-          </span>
-          <span className="text-[10px] text-zinc-400 font-medium">Demo Mode</span>
-        </div>
+      {/* 1-Click Fast Student Test Accounts (Development & Staging Only) */}
+      {process.env.NODE_ENV !== "production" && (
+        <div className="mt-8 bg-zinc-50/90 rounded-3xl border border-zinc-200/80 p-5 space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-400 font-mono flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+              1-Click Student Test Accounts
+            </span>
+            <span className="text-[10px] text-zinc-400 font-medium">Demo Mode</span>
+          </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          {TEST_PERSONAS.map((p) => {
-            const isLoggingIn = activePersonaEmail === p.email;
-            return (
-              <button
-                key={p.email}
-                type="button"
-                disabled={activePersonaEmail !== null}
-                onClick={() => handleFastLogin(p.email)}
-                className="p-3 rounded-2xl bg-white hover:bg-emerald-50 border border-zinc-200 hover:border-emerald-300 text-left transition-all group shadow-2xs active:scale-[0.99] cursor-pointer disabled:opacity-50"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-zinc-900 group-hover:text-emerald-950 truncate">
-                    {p.name}
-                  </span>
-                  {isLoggingIn ? (
-                    <Loader2 className="w-3.5 h-3.5 text-emerald-600 animate-spin" />
-                  ) : (
-                    <ArrowRight className="w-3.5 h-3.5 text-zinc-400 group-hover:text-emerald-700 group-hover:translate-x-0.5 transition-all" />
-                  )}
-                </div>
-                <p className="text-[10px] text-emerald-800 font-medium mt-0.5 truncate">
-                  {p.role}
-                </p>
-                <p className="text-[10px] text-zinc-400 truncate">{p.pref}</p>
-              </button>
-            );
-          })}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            {TEST_PERSONAS.map((p) => {
+              const isLoggingIn = activePersonaEmail === p.email;
+              return (
+                <button
+                  key={p.email}
+                  type="button"
+                  disabled={activePersonaEmail !== null}
+                  onClick={() => handleFastLogin(p.email)}
+                  className="p-3 rounded-2xl bg-white hover:bg-emerald-50 border border-zinc-200 hover:border-emerald-300 text-left transition-all group shadow-2xs active:scale-[0.99] cursor-pointer disabled:opacity-50"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-zinc-900 group-hover:text-emerald-950 truncate">
+                      {p.name}
+                    </span>
+                    {isLoggingIn ? (
+                      <Loader2 className="w-3.5 h-3.5 text-emerald-600 animate-spin" />
+                    ) : (
+                      <ArrowRight className="w-3.5 h-3.5 text-zinc-400 group-hover:text-emerald-700 group-hover:translate-x-0.5 transition-all" />
+                    )}
+                  </div>
+                  <p className="text-[10px] text-emerald-800 font-medium mt-0.5 truncate">
+                    {p.role}
+                  </p>
+                  <p className="text-[10px] text-zinc-400 truncate">{p.pref}</p>
+                </button>
+              );
+            })}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Public Listings Navigation Link */}
       <div className="mt-6 text-center">
