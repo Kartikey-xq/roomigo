@@ -3,7 +3,6 @@ import { getCurrentSession } from "@/lib/auth/session";
 import prisma from "@/lib/db/prisma";
 import { RequestStatus } from "@prisma/client";
 
-
 export async function GET() {
   const session = await getCurrentSession();
   if (!session) {

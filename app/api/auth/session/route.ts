@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { getCurrentSession } from "@/lib/auth/session";
 import prisma from "@/lib/db/prisma";
 
-
 export async function GET() {
   try {
     const session = await getCurrentSession();

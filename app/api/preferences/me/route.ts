@@ -3,7 +3,6 @@ import { getCurrentSession } from "@/lib/auth/session";
 import prisma from "@/lib/db/prisma";
 import { UpdatePreferenceSchema } from "@/lib/schemas/profile.schema";
 
-
 export async function GET() {
   const session = await getCurrentSession();
   if (!session) {
