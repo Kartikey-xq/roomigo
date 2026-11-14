@@ -1,0 +1,470 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ==========================================
+// ENUMS
+// ==========================================
+
+enum UserRole {
+  STUDENT
+  ADMIN
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum CampusLocation {
+  GEHU           // Graphic Era Hill University (Bell Road)
+  GEU_MAIN       // Graphic Era University Main Campus (Clement Town)
+  BOTH
+}
+
+enum PreferredGenderRule {
+  SAME_GENDER_ONLY
+  ANY_GENDER
+}
+
+enum SleepCycle {
+  EARLY_BIRD      // 10:30 PM - 6:30 AM
+  NIGHT_OWL       // 2:00 AM - 9:30 AM
+  FLEXIBLE        // Variable / Class dependent
+}
+
+enum DietHabit {
+  PURE_VEGETARIAN
+  EGGETARIAN
+  NON_VEGETARIAN
+}
+
+enum CleanlinessHabit {
+  DAILY_HIGH      // Cleans daily, high sanitization
+  MODERATE_WEEKLY // Standard weekly cleaning
+}
+
+enum SmokingHabit {
+  NON_SMOKER
+  OUTDOOR_ONLY
+  SMOKER
+}
+
+enum StudyHabit {
+  QUIET_ALONE
+  GROUP_STUDY
+  MUSIC_BACKGROUND
+  LATE_NIGHT_LIBRARY
+}
+
+enum VerificationStatus {
+  UNVERIFIED
+  PENDING_REVIEW
+  VERIFIED
+  REJECTED
+}
+
+enum RequestStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  CANCELLED
+}
+
+enum ResidenceType {
+  CO_ED
+  BOYS_ONLY
+  GIRLS_ONLY
+}
+
+enum ProximityLandmark {
+  GEHU_CAMPUS
+  GEU_MAIN_CAMPUS
+  CLEMENT_TOWN_MARKET
+  SUBHASH_NAGAR_CHOWK
+  BELL_ROAD
+  ISBT_DEHRADUN
+}
+
+enum ProximityTravelMode {
+  WALKING
+  SCOOTER
+  BUS
+}
+
+enum AmenityIcon {
+  WIFI
+  MEALS
+  BATH
+  POWER_BACKUP
+  WATER_PURIFIER
+  LAUNDRY
+  SECURITY_CCTV
+  GYM
+  AC
+  STUDY_DESK
+}
+
+enum ReportReason {
+  HARASSMENT_ABUSE
+  FAKE_STUDENT_ID
+  FINANCIAL_SCAM
+  INAPPROPRIATE_BEHAVIOR
+  SPAM_COMMERCIAL
+  OTHER
+}
+
+enum ReportStatus {
+  PENDING
+  INVESTIGATING
+  RESOLVED
+  DISMISSED
+}
+
+// ==========================================
+// AUTHENTICATION & SESSIONS
+// ==========================================
+
+model User {
+  id                 String             @id @default(uuid()) @db.Uuid
+  email              String             @unique
+  passwordHash       String
+  role               UserRole           @default(STUDENT)
+  isEmailVerified    Boolean            @default(false)
+  isActive           Boolean            @default(true)
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  deletedAt          DateTime?
+
+  sessions           Session[]
+  studentProfile     StudentProfile?
+  savedListings      SavedListing[]
+  sentRequests       RoommateRequest[]  @relation("SentRequests")
+  receivedRequests   RoommateRequest[]  @relation("ReceivedRequests")
+  conversations      ConversationParticipant[]
+  sentMessages       Message[]          @relation("SentMessages")
+  reportsFiled       BlockReport[]      @relation("ReportsFiled")
+  reportsReceived    BlockReport[]      @relation("ReportsReceived")
+  searchHistory      MatchScanRecord[]
+
+  @@index([email])
+}
+
+model Session {
+  id           String    @id @default(uuid()) @db.Uuid
+  userId       String    @db.Uuid
+  tokenHash    String    @unique
+  userAgent    String?
+  ipAddress    String?
+  expiresAt    DateTime
+  revokedAt    DateTime?
+  createdAt    DateTime  @default(now())
+
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([tokenHash])
+}
+
+// ==========================================
+// STUDENT PROFILE & VERIFICATION
+// ==========================================
+
+model StudentProfile {
+  id                   String              @id @default(uuid()) @db.Uuid
+  userId               String              @unique @db.Uuid
+  fullName             String
+  gender               Gender
+  campus               CampusLocation      @default(GEHU)
+  course               String              // e.g. "B.Tech Computer Science & Engg."
+  yearOfStudy          String              // e.g. "2nd Year"
+  currentTerm          String              // e.g. "4th Sem (2nd Yr)"
+  affiliation          String              // e.g. "GEHU Dehradun"
+  studentIdPrefix      String?             // e.g. "GEHU-CSE-2023"
+  avatarUrl            String?
+  bio                  String?             @db.Text
+  phoneNumber          String?
+  whatsappNumber       String?
+  verificationStatus   VerificationStatus  @default(UNVERIFIED)
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
+
+  user                 User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  roommatePreference   RoommatePreference?
+  verificationAudit    StudentVerification?
+
+  @@index([campus, course])
+  @@index([verificationStatus])
+}
+
+model StudentVerification {
+  id                   String              @id @default(uuid()) @db.Uuid
+  profileId            String              @unique @db.Uuid
+  idCardImageUrl       String              // Stored securely in Cloudflare R2 / local
+  enrollmentNumber     String              // Official Graphic Era Student ID / Roll No
+  submittedAt          DateTime            @default(now())
+  reviewedAt           DateTime?
+  reviewedByAdminId    String?             @db.Uuid
+  rejectionReason      String?
+
+  profile              StudentProfile      @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([enrollmentNumber])
+}
+
+// ==========================================
+// ROOMMATE PREFERENCES & MATCHING
+// ==========================================
+
+model RoommatePreference {
+  id                   String              @id @default(uuid()) @db.Uuid
+  profileId            String              @unique @db.Uuid
+  isLive               Boolean             @default(true) // Toggle discovery in searches
+  
+  // Hard Constraint Fields
+  preferredGender      PreferredGenderRule @default(SAME_GENDER_ONLY)
+  budgetMin            Int                 @default(6000) // INR per month
+  budgetMax            Int                 @default(10000)
+  targetLocations      String[]            // e.g. ["Bell Road", "Subhash Nagar", "Clement Town"]
+
+  // Lifestyle Compatibility Fields
+  sleepCycle           SleepCycle          @default(EARLY_BIRD)
+  diet                 DietHabit           @default(PURE_VEGETARIAN)
+  cleanliness          CleanlinessHabit    @default(DAILY_HIGH)
+  smoking              SmokingHabit        @default(NON_SMOKER)
+  studyHabit           StudyHabit          @default(QUIET_ALONE)
+  hobbies              String[]            // e.g. ["Coding", "Badminton", "Gaming"]
+
+  updatedAt            DateTime            @updatedAt
+
+  profile              StudentProfile      @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([isLive, budgetMin, budgetMax])
+}
+
+model MatchScanRecord {
+  id             String    @id @default(uuid()) @db.Uuid
+  userId         String    @db.Uuid
+  searchParams   Json      // Snapshot of criteria applied (campus, course, budget, etc.)
+  matchedCount   Int
+  topMatchScore  Int?
+  createdAt      DateTime  @default(now())
+
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+}
+
+// ==========================================
+// CONNECTION REQUESTS & CONVERSATIONS
+// ==========================================
+
+model RoommateRequest {
+  id             String         @id @default(uuid()) @db.Uuid
+  senderId       String         @db.Uuid
+  receiverId     String         @db.Uuid
+  status         RequestStatus  @default(PENDING)
+  requestMessage String?        @db.VarChar(500)
+  createdAt      DateTime       @default(now())
+  respondedAt    DateTime?
+
+  sender         User           @relation("SentRequests", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver       User           @relation("ReceivedRequests", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  @@unique([senderId, receiverId])
+  @@index([receiverId, status])
+  @@index([senderId, status])
+}
+
+model Conversation {
+  id               String                    @id @default(uuid()) @db.Uuid
+  directKey        String?                   @unique // Canonical sorted key: "userIdA:userIdB" for 1-to-1 chats
+  createdAt        DateTime                  @default(now())
+  updatedAt        DateTime                  @updatedAt
+  lastMessageAt    DateTime                  @default(now())
+
+  participants     ConversationParticipant[]
+  messages         Message[]
+
+  @@index([lastMessageAt])
+  @@index([directKey])
+}
+
+model ConversationParticipant {
+  id               String       @id @default(uuid()) @db.Uuid
+  conversationId   String       @db.Uuid
+  userId           String       @db.Uuid
+  lastReadAt       DateTime     @default(now())
+  isArchived       Boolean      @default(false)
+  isMuted          Boolean      @default(false)
+  joinedAt         DateTime     @default(now())
+
+  conversation     Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  user             User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([conversationId, userId])
+  @@index([userId])
+}
+
+model Message {
+  id               String       @id @default(uuid()) @db.Uuid
+  conversationId   String       @db.Uuid
+  senderId         String       @db.Uuid
+  text             String       @db.Text
+  isDelivered      Boolean      @default(true)
+  deliveredAt      DateTime     @default(now())
+  isRead           Boolean      @default(false)
+  readAt           DateTime?
+  deletedBySender  Boolean      @default(false)
+  deletedByRecipient Boolean    @default(false)
+  createdAt        DateTime     @default(now())
+
+  conversation     Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender           User         @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId, createdAt])
+  @@index([senderId])
+}
+
+// ==========================================
+// MODERATION & ABUSE REPORTING
+// ==========================================
+
+model BlockReport {
+  id                    String        @id @default(uuid()) @db.Uuid
+  reporterId            String        @db.Uuid
+  reportedUserId        String        @db.Uuid
+  reason                ReportReason
+  details               String        @db.Text
+  saveProof             Boolean       @default(true)
+  chatEvidenceSnapshot  Json?         // Immutable snapshot of last 50 messages + timestamps
+  status                ReportStatus  @default(PENDING)
+  createdAt             DateTime      @default(now())
+  resolvedAt            DateTime?
+
+  reporter              User          @relation("ReportsFiled", fields: [reporterId], references: [id], onDelete: Cascade)
+  reportedUser          User          @relation("ReportsReceived", fields: [reportedUserId], references: [id], onDelete: Cascade)
+
+  @@index([reportedUserId, status])
+  @@index([reporterId])
+}
+
+// ==========================================
+// ACCOMMODATION LISTINGS
+// ==========================================
+
+model Listing {
+  id                    String             @id @default(uuid()) @db.Uuid
+  slug                  String             @unique
+  title                 String
+  isVerified            Boolean            @default(true)
+  residenceType         ResidenceType      @default(CO_ED)
+  wingsInfo             String             // e.g. "Boys & Girls Separate Wings"
+  addressLine           String             // e.g. "Lane 4, Subhash Nagar, Clement Town"
+  city                  String             @default("Dehradun")
+  state                 String             @default("Uttarakhand")
+  pincode               String             @default("248002")
+  latitude              Decimal?           @db.Decimal(10, 8)
+  longitude             Decimal?           @db.Decimal(11, 8)
+  
+  ratingScore           Decimal            @default(4.8) @db.Decimal(2, 1)
+  ratingCount           Int                @default(0)
+
+  minPrice              Int                // e.g. 8200
+  maxPrice              Int?               // e.g. 12500
+  pricingPeriod         String             @default("/mo")
+  inclusionsNote        String             // e.g. "Electricity & 3 Daily Meals Included"
+  
+  totalBedsLeft         Int                @default(0) // 0 = Sold Out Watermark
+  availabilitySummary   String             // e.g. "Both Single & Twin Available" or "Sold Out"
+  
+  ownerName             String
+  ownerWhatsappNumber   String             // e.g. "919876543210"
+  ownerRole             String             @default("Property Manager")
+
+  isPublished           Boolean            @default(true)
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime           @updatedAt
+
+  images                ListingImage[]
+  bedConfigurations     BedConfiguration[]
+  proximities           ListingProximity[]
+  amenities             ListingAmenity[]
+  savedBy               SavedListing[]
+
+  @@index([city, isPublished])
+  @@index([minPrice, maxPrice])
+  @@index([totalBedsLeft])
+}
+
+model ListingImage {
+  id             String    @id @default(uuid()) @db.Uuid
+  listingId      String    @db.Uuid
+  imageUrl       String    // Cloudflare R2 CDN URL
+  storageKey     String    // Internal R2 object key
+  orderIndex     Int       @default(0)
+
+  listing        Listing   @relation(fields: [listingId], references: [id], onDelete: Cascade)
+
+  @@index([listingId, orderIndex])
+}
+
+model BedConfiguration {
+  id             String    @id @default(uuid()) @db.Uuid
+  listingId      String    @db.Uuid
+  name           String    // e.g. "Twin Sharing", "Single Room"
+  price          Int       // e.g. 8200
+  period         String    @default("/month")
+  availableBeds  Int       @default(0)
+  statusLabel    String?   // e.g. "2 beds left", "Sold out"
+  isAvailable    Boolean   @default(true)
+
+  listing        Listing   @relation(fields: [listingId], references: [id], onDelete: Cascade)
+
+  @@index([listingId])
+}
+
+model ListingProximity {
+  id             String               @id @default(uuid()) @db.Uuid
+  listingId      String               @db.Uuid
+  landmark       ProximityLandmark
+  customName     String?              // e.g. "GEHU Bell Road Campus"
+  distance       String               // e.g. "450m", "1.2 km"
+  timeEstimate   String               // e.g. "5 mins walking"
+  travelMode     ProximityTravelMode  @default(WALKING)
+
+  listing        Listing              @relation(fields: [listingId], references: [id], onDelete: Cascade)
+
+  @@index([listingId])
+}
+
+model ListingAmenity {
+  id             String       @id @default(uuid()) @db.Uuid
+  listingId      String       @db.Uuid
+  title          String       // e.g. "300 Mbps"
+  subtitle       String       // e.g. "Wi-Fi"
+  icon           AmenityIcon  @default(WIFI)
+
+  listing        Listing      @relation(fields: [listingId], references: [id], onDelete: Cascade)
+
+  @@index([listingId])
+}
+
+model SavedListing {
+  id             String    @id @default(uuid()) @db.Uuid
+  userId         String    @db.Uuid
+  listingId      String    @db.Uuid
+  createdAt      DateTime  @default(now())
+
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  listing        Listing   @relation(fields: [listingId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, listingId])
+  @@index([userId])
+}

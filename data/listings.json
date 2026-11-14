@@ -1,0 +1,333 @@
+[
+  {
+    "id": "stanza-cambridge-house",
+    "title": "Stanza Living – Cambridge House",
+    "isVerified": true,
+    "residenceType": "Co-ed Residence",
+    "wingsInfo": "Boys & Girls Wings",
+    "rating": {
+      "score": 4.8,
+      "reviewCount": 124
+    },
+    "address": {
+      "line": "Lane 4, Subhash Nagar, Clement Town, Dehradun, Uttarakhand - 248002",
+      "city": "Dehradun",
+      "state": "Uttarakhand",
+      "pincode": "248002"
+    },
+    "proximity": [
+      {
+        "landmark": "GEHU",
+        "distance": "450m",
+        "time": "5 mins walking",
+        "iconType": "education",
+        "travelMode": "walking"
+      },
+      {
+        "landmark": "GEU Main",
+        "distance": "1.2 km",
+        "time": "3 mins scooty / 12m walk",
+        "iconType": "college",
+        "travelMode": "scooter"
+      }
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "bedConfigurations": [
+      {
+        "id": "twin-sharing",
+        "name": "Twin Sharing",
+        "price": 8200,
+        "period": "/month",
+        "availableBeds": 2,
+        "statusLabel": "2 beds left",
+        "isAvailable": true
+      },
+      {
+        "id": "single-room",
+        "name": "Single Room",
+        "price": 12500,
+        "period": "/month",
+        "availableBeds": 1,
+        "statusLabel": "Only 1 room left",
+        "isAvailable": true
+      }
+    ],
+    "totalBedsLeft": 3,
+    "availabilitySummary": "Both Single & Twin Available",
+    "amenities": [
+      {
+        "id": "wifi",
+        "title": "300 Mbps",
+        "subtitle": "Wi-Fi",
+        "iconType": "wifi"
+      },
+      {
+        "id": "meals",
+        "title": "3x Meals",
+        "subtitle": "+ Tea Snack",
+        "iconType": "meals"
+      },
+      {
+        "id": "bath",
+        "title": "Attached",
+        "subtitle": "Geyser Bath",
+        "iconType": "bath"
+      },
+      {
+        "id": "power",
+        "title": "24/7 Power",
+        "subtitle": "Backup Genset",
+        "iconType": "power"
+      },
+      {
+        "id": "water",
+        "title": "RO Water",
+        "subtitle": "Cooler Disp.",
+        "iconType": "water"
+      },
+      {
+        "id": "laundry",
+        "title": "Laundry",
+        "subtitle": "2x / Week",
+        "iconType": "laundry"
+      }
+    ],
+    "pricingSummary": {
+      "minPrice": 8200,
+      "maxPrice": 12500,
+      "period": "/mo",
+      "inclusionsNote": "Electricity & 3 Daily Meals Included"
+    },
+    "ownerContact": {
+      "name": "Cambridge House Desk",
+      "whatsappNumber": "919876543210",
+      "role": "Property Manager"
+    }
+  },
+  {
+    "id": "tribe-stays-silicon-villa",
+    "title": "Tribe Stays – Silicon Villa",
+    "isVerified": true,
+    "residenceType": "Boys Residence",
+    "wingsInfo": "Academic Wing Only",
+    "rating": {
+      "score": 4.9,
+      "reviewCount": 98
+    },
+    "address": {
+      "line": "Plot 12, Bell Road, Clement Town, Dehradun, Uttarakhand - 248002",
+      "city": "Dehradun",
+      "state": "Uttarakhand",
+      "pincode": "248002"
+    },
+    "proximity": [
+      {
+        "landmark": "GEU Campus",
+        "distance": "300m",
+        "time": "3 mins walking",
+        "iconType": "college",
+        "travelMode": "walking"
+      },
+      {
+        "landmark": "Clement Market",
+        "distance": "800m",
+        "time": "2 mins scooty",
+        "iconType": "general",
+        "travelMode": "scooter"
+      }
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "bedConfigurations": [
+      {
+        "id": "twin-sharing",
+        "name": "Twin Sharing",
+        "price": 9000,
+        "period": "/month",
+        "availableBeds": 0,
+        "statusLabel": "Sold out",
+        "isAvailable": false
+      },
+      {
+        "id": "single-room",
+        "name": "Single Room",
+        "price": 14000,
+        "period": "/month",
+        "availableBeds": 0,
+        "statusLabel": "Sold out",
+        "isAvailable": false
+      }
+    ],
+    "totalBedsLeft": 0,
+    "availabilitySummary": "Sold Out",
+    "amenities": [
+      {
+        "id": "wifi",
+        "title": "500 Mbps",
+        "subtitle": "Fiber Wi-Fi",
+        "iconType": "wifi"
+      },
+      {
+        "id": "meals",
+        "title": "4x Meals",
+        "subtitle": "Buffet Included",
+        "iconType": "meals"
+      },
+      {
+        "id": "bath",
+        "title": "Attached",
+        "subtitle": "Luxury Bath",
+        "iconType": "bath"
+      },
+      {
+        "id": "power",
+        "title": "100% Power",
+        "subtitle": "Silent Genset",
+        "iconType": "power"
+      },
+      {
+        "id": "water",
+        "title": "Alkaline RO",
+        "subtitle": "Purified Water",
+        "iconType": "water"
+      },
+      {
+        "id": "laundry",
+        "title": "Daily",
+        "subtitle": "Laundry Service",
+        "iconType": "laundry"
+      }
+    ],
+    "pricingSummary": {
+      "minPrice": 9000,
+      "maxPrice": 14000,
+      "period": "/mo",
+      "inclusionsNote": "Fully Furnished & Daily Housekeeping"
+    },
+    "ownerContact": {
+      "name": "Silicon Villa Reception",
+      "whatsappNumber": "919812345678",
+      "role": "Host"
+    }
+  },
+  {
+    "id": "your-space-green-oasis",
+    "title": "Your-Space – Green Oasis",
+    "isVerified": true,
+    "residenceType": "Girls Residence",
+    "wingsInfo": "Dedicated Security & Biometric",
+    "rating": {
+      "score": 4.7,
+      "reviewCount": 86
+    },
+    "address": {
+      "line": "Near Post Office, Turner Road, Clement Town, Dehradun, Uttarakhand - 248002",
+      "city": "Dehradun",
+      "state": "Uttarakhand",
+      "pincode": "248002"
+    },
+    "proximity": [
+      {
+        "landmark": "GEHU Gate 2",
+        "distance": "600m",
+        "time": "7 mins walking",
+        "iconType": "education",
+        "travelMode": "walking"
+      },
+      {
+        "landmark": "ISBT Dehradun",
+        "distance": "3.5 km",
+        "time": "10 mins auto",
+        "iconType": "transit",
+        "travelMode": "bus"
+      }
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "bedConfigurations": [
+      {
+        "id": "twin-sharing",
+        "name": "Twin Sharing",
+        "price": 7800,
+        "period": "/month",
+        "availableBeds": 3,
+        "statusLabel": "3 beds left",
+        "isAvailable": true
+      },
+      {
+        "id": "single-room",
+        "name": "Single Room",
+        "price": 11000,
+        "period": "/month",
+        "availableBeds": 1,
+        "statusLabel": "1 room left",
+        "isAvailable": true
+      }
+    ],
+    "totalBedsLeft": 4,
+    "availabilitySummary": "Both Single & Twin Available",
+    "amenities": [
+      {
+        "id": "wifi",
+        "title": "200 Mbps",
+        "subtitle": "Wi-Fi",
+        "iconType": "wifi"
+      },
+      {
+        "id": "meals",
+        "title": "3x Meals",
+        "subtitle": "Hygienic Kitchen",
+        "iconType": "meals"
+      },
+      {
+        "id": "bath",
+        "title": "Attached",
+        "subtitle": "Solar Geyser",
+        "iconType": "bath"
+      },
+      {
+        "id": "power",
+        "title": "24/7 Power",
+        "subtitle": "Backup Inverter",
+        "iconType": "power"
+      },
+      {
+        "id": "water",
+        "title": "UV + RO",
+        "subtitle": "Mineral Water",
+        "iconType": "water"
+      },
+      {
+        "id": "laundry",
+        "title": "Laundry",
+        "subtitle": "Free Washing Mach.",
+        "iconType": "laundry"
+      }
+    ],
+    "pricingSummary": {
+      "minPrice": 7800,
+      "maxPrice": 11000,
+      "period": "/mo",
+      "inclusionsNote": "All Meals & Wi-Fi Included"
+    },
+    "ownerContact": {
+      "name": "Green Oasis Caretaker",
+      "whatsappNumber": "919765432109",
+      "role": "Warden"
+    }
+  }
+]

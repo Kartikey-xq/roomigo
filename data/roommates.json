@@ -1,0 +1,524 @@
+{
+  "connectedRoommates": [
+    {
+      "id": "aarav-sharma",
+      "name": "Aarav Sharma",
+      "avatar": "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80",
+      "isVerified": true,
+      "studentIdPrefix": "GEHU-CSE-2023",
+      "college": "GEHU",
+      "course": "B.Tech CSE",
+      "year": "2nd Year",
+      "matchPercentage": 96,
+      "matchHighlight": {
+        "icon": "zap",
+        "text": "96% Match • Early Bird & Pure Veg"
+      },
+      "lookingFor": "Bell Road PGs",
+      "bio": "2nd year CSE student at GEHU. Looking for a neat flatmate to share a 2BHK or double sharing room near Subhash Nagar / Bell Road. Non-smoker, early sleeper, coding enthusiast.",
+      "isOnline": true,
+      "lastMessage": {
+        "text": "Bhai, let's visit that 2BHK flat near Clement To...",
+        "time": "10:42 AM",
+        "isDelivered": true,
+        "unreadCount": 1
+      },
+      "preferences": {
+        "sleepCycle": "Early Bird (11pm - 6:30am)",
+        "diet": "Pure Vegetarian",
+        "smoking": "Strict Non-Smoker",
+        "studyHabit": "Quiet Study in Room",
+        "cleanliness": "Cleans Weekly & High Hygiene",
+        "budget": "₹7,000 - ₹9,500 /mo",
+        "hobbies": ["Competitive Programming", "Badminton", "Reading"]
+      }
+    },
+    {
+      "id": "rohan-verma",
+      "name": "Rohan Verma",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
+      "isVerified": true,
+      "studentIdPrefix": "GEU-BCA-2024",
+      "college": "GEU",
+      "course": "BCA",
+      "year": "1st Year",
+      "matchPercentage": 92,
+      "matchHighlight": {
+        "icon": "gamepad",
+        "text": "92% Match • Night Owl & Gamer"
+      },
+      "lookingFor": "Subhash Nagar PGs",
+      "bio": "1st year BCA student at GEU Main Campus. Chill flatmate who loves gaming and late-night study sessions. Looking for someone okay with night gaming & food runs.",
+      "isOnline": true,
+      "lastMessage": {
+        "text": "Landlord agreed to 8k per head with Wi-Fi included!",
+        "time": "Yesterday",
+        "isDelivered": true,
+        "unreadCount": 0
+      },
+      "preferences": {
+        "sleepCycle": "Night Owl (2am - 9am)",
+        "diet": "Non-Vegetarian",
+        "smoking": "No Smoking Indoors",
+        "studyHabit": "Music while studying",
+        "cleanliness": "Moderate",
+        "budget": "₹6,000 - ₹8,500 /mo",
+        "hobbies": ["Valorant", "Guitar", "Anime"]
+      }
+    },
+    {
+      "id": "priya-nautiyal",
+      "name": "Priya Nautiyal",
+      "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80",
+      "isVerified": true,
+      "studentIdPrefix": "GEHU-ECE-2022",
+      "college": "GEHU",
+      "course": "B.Tech ECE",
+      "year": "3rd Year",
+      "matchPercentage": 94,
+      "matchHighlight": {
+        "icon": "leaf",
+        "text": "94% Match • Quiet Study & Tea Lover"
+      },
+      "lookingFor": "Turner Road Apartments",
+      "bio": "ECE 3rd yearite. Seeking a respectful and peaceful roommate for an apartment near Turner Road. Very focused on academics during exams, love cooking chai on weekends.",
+      "isOnline": false,
+      "lastMessage": {
+        "text": "Shared the flat pictures and lease doc on Drive!",
+        "time": "Nov 12",
+        "isDelivered": true,
+        "unreadCount": 0
+      },
+      "preferences": {
+        "sleepCycle": "Flexible (12am - 7am)",
+        "diet": "Vegetarian",
+        "smoking": "Non-Smoker",
+        "studyHabit": "Silent environment",
+        "cleanliness": "Very High / Regular",
+        "budget": "₹8,000 - ₹11,000 /mo",
+        "hobbies": ["Yoga", "Cooking", "Podcasts"]
+      }
+    },
+    {
+      "id": "aditya-rawat",
+      "name": "Aditya Rawat",
+      "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
+      "isVerified": true,
+      "studentIdPrefix": "GEU-IT-2023",
+      "college": "GEU",
+      "course": "B.Tech IT",
+      "year": "2nd Year",
+      "matchPercentage": 90,
+      "matchHighlight": {
+        "icon": "zap",
+        "text": "90% Match • Early Bird & Fitness"
+      },
+      "lookingFor": "Clement Town Flats",
+      "bio": "Gym enthusiast and IT sophomore. Looking for a room partner who respects workout schedules and maintains cleanliness. Early riser, no partying inside flat.",
+      "isOnline": true,
+      "lastMessage": {
+        "text": "Bro, does Stanza Living have a gym nearby?",
+        "time": "Nov 10",
+        "isDelivered": true,
+        "unreadCount": 0
+      },
+      "preferences": {
+        "sleepCycle": "Early Bird (10pm - 5:30am)",
+        "diet": "Eggetarian / High Protein",
+        "smoking": "Non-Smoker",
+        "studyHabit": "Morning study sessions",
+        "cleanliness": "High",
+        "budget": "₹7,500 - ₹10,000 /mo",
+        "hobbies": ["Calisthenics", "Football", "Web3"]
+      }
+    }
+  ],
+  "newMatchRequests": [
+    {
+      "id": "vikramaditya-joshi",
+      "name": "Vikramaditya Joshi",
+      "avatar": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80",
+      "isVerified": true,
+      "studentIdPrefix": "GEHU-CSE-2024",
+      "college": "GEHU",
+      "course": "B.Tech CSE",
+      "year": "1st Year",
+      "matchPercentage": 95,
+      "matchHighlight": {
+        "icon": "zap",
+        "text": "95% Match • Pure Veg & Non-Smoker"
+      },
+      "lookingFor": "Bell Road PGs",
+      "bio": "Fresher in CSE. You appeared on my top scan matches! Looking for a disciplined, friendly roommate near Clement Town Lane 4.",
+      "isOnline": true,
+      "requestMessage": "Hey Kartikey! We matched 95% on study habits & vegetarian mess. Would love to share a double room near GEHU!",
+      "requestedAt": "2 hours ago",
+      "mutualTraits": ["Both Early Birds", "Pure Vegetarian", "CSE Department", "Bell Road Target"],
+      "preferences": {
+        "sleepCycle": "Early Bird (11pm - 6am)",
+        "diet": "Pure Vegetarian",
+        "smoking": "Strict Non-Smoker",
+        "studyHabit": "Group study / Discussions",
+        "cleanliness": "High",
+        "budget": "₹7,000 - ₹9,000 /mo",
+        "hobbies": ["Coding", "Chess", "Table Tennis"]
+      }
+    },
+    {
+      "id": "siddharth-negi",
+      "name": "Siddharth Negi",
+      "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80",
+      "isVerified": true,
+      "studentIdPrefix": "GEU-MCA-2023",
+      "college": "GEU",
+      "course": "MCA",
+      "year": "2nd Year",
+      "matchPercentage": 93,
+      "matchHighlight": {
+        "icon": "book",
+        "text": "93% Match • Early Bird & Serious Study"
+      },
+      "lookingFor": "GEU Campus Vicinity",
+      "bio": "Postgrad student preparing for campus placements. Need a quiet roommate who respects focus hours.",
+      "isOnline": false,
+      "requestMessage": "Hi! Looking for a flatmate for a furnished 2BHK near Graphic Era Hill Gate 2. Rent is ₹7,500/head.",
+      "requestedAt": "5 hours ago",
+      "mutualTraits": ["Both Non-Smokers", "Placement Prep", "Quiet Hours", "Budget Aligned"],
+      "preferences": {
+        "sleepCycle": "Early Bird (11:30pm - 7am)",
+        "diet": "Vegetarian",
+        "smoking": "Non-Smoker",
+        "studyHabit": "Silent focus hours",
+        "cleanliness": "Cleans Weekly",
+        "budget": "₹7,500 - ₹10,000 /mo",
+        "hobbies": ["Placement Prep", "Cycling", "Music"]
+      }
+    }
+  ],
+  "scanResults": [
+    {
+      "id": "scan-1",
+      "name": "Dhruv Kothari",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
+      "isVerified": true,
+      "studentIdPrefix": "GEHU-CSE-2023",
+      "college": "GEHU",
+      "course": "B.Tech CSE",
+      "year": "2nd Year",
+      "matchPercentage": 98,
+      "matchHighlight": {
+        "icon": "zap",
+        "text": "98% Match • Early Bird & Coding"
+      },
+      "lookingFor": "Clement Town 2BHK",
+      "bio": "DevOps enthusiast and open-source contributor. Looking for flatmates to lease a 3BHK flat near Bell Road.",
+      "isOnline": true,
+      "preferences": {
+        "sleepCycle": "Early Bird (11pm - 6am)",
+        "diet": "Pure Vegetarian",
+        "smoking": "Non-Smoker",
+        "studyHabit": "Project based study",
+        "cleanliness": "High",
+        "budget": "₹8,000 - ₹10,000 /mo",
+        "hobbies": ["Hackathons", "Linux", "Cricket"]
+      }
+    },
+    {
+      "id": "scan-2",
+      "name": "Manish Negi",
+      "avatar": "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=400&q=80",
+      "isVerified": true,
+      "studentIdPrefix": "GEU-BTECH-2023",
+      "college": "GEU",
+      "course": "B.Tech ECE",
+      "year": "2nd Year",
+      "matchPercentage": 97,
+      "matchHighlight": {
+        "icon": "leaf",
+        "text": "97% Match • Quiet & Vegetarian"
+      },
+      "lookingFor": "Subhash Nagar PGs",
+      "bio": "Robotics lover, looking for twin sharing partner in Stanza Living or Cambridge House.",
+      "isOnline": true,
+      "preferences": {
+        "sleepCycle": "Early Bird (11pm - 6:30am)",
+        "diet": "Vegetarian",
+        "smoking": "Non-Smoker",
+        "studyHabit": "Quiet study",
+        "cleanliness": "Cleans daily",
+        "budget": "₹7,500 - ₹9,000 /mo",
+        "hobbies": ["Robotics", "Trekking", "Flute"]
+      }
+    },
+    {
+      "id": "scan-3",
+      "name": "Ayush Bisht",
+      "avatar": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+      "isVerified": true,
+      "studentIdPrefix": "GEHU-BBA-2024",
+      "college": "GEHU",
+      "course": "BBA",
+      "year": "1st Year",
+      "matchPercentage": 96,
+      "matchHighlight": {
+        "icon": "sparkles",
+        "text": "96% Match • Clean & Organized"
+      },
+      "lookingFor": "Turner Road Flats",
+      "bio": "BBA student looking for flatmate who values neatness and clean surroundings.",
+      "isOnline": false,
+      "preferences": {
+        "sleepCycle": "Early Bird (11:30pm - 7am)",
+        "diet": "Veg Mess",
+        "smoking": "Strict Non-Smoker",
+        "studyHabit": "Morning study",
+        "cleanliness": "Very High",
+        "budget": "₹7,000 - ₹9,500 /mo",
+        "hobbies": ["Debating", "Swimming", "Stocks"]
+      }
+    },
+    {
+      "id": "scan-4",
+      "name": "Karan Singhal",
+      "avatar": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=400&q=80",
+      "isVerified": true,
+      "studentIdPrefix": "GEU-CSE-2023",
+      "college": "GEU",
+      "course": "B.Tech CSE",
+      "year": "2nd Year",
+      "matchPercentage": 95,
+      "matchHighlight": {
+        "icon": "zap",
+        "text": "95% Match • LeetCode & Badminton"
+      },
+      "lookingFor": "Lane 4 Clement Town",
+      "bio": "CSE student preparing for summer internships. Looking for someone with similar tech drive.",
+      "isOnline": true,
+      "preferences": {
+        "sleepCycle": "12am - 7am",
+        "diet": "Pure Vegetarian",
+        "smoking": "Non-Smoker",
+        "studyHabit": "Peer coding",
+        "cleanliness": "Regular",
+        "budget": "₹8,000 - ₹11,000 /mo",
+        "hobbies": ["LeetCode", "Badminton", "Coffee"]
+      }
+    },
+    {
+      "id": "scan-5",
+      "name": "Nikhil Uniyal",
+      "avatar": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80",
+      "isVerified": true,
+      "studentIdPrefix": "GEHU-BCA-2024",
+      "college": "GEHU",
+      "course": "BCA",
+      "year": "1st Year",
+      "matchPercentage": 95,
+      "matchHighlight": {
+        "icon": "gamepad",
+        "text": "95% Match • Casual Gaming & Chill"
+      },
+      "lookingFor": "Near GEHU Campus",
+      "bio": "BCA fresher. Looking for someone friendly to share double room near university gate.",
+      "isOnline": true,
+      "preferences": {
+        "sleepCycle": "Flexible",
+        "diet": "Eggetarian",
+        "smoking": "No Smoking in Room",
+        "studyHabit": "Group study",
+        "cleanliness": "Moderate",
+        "budget": "₹6,500 - ₹8,500 /mo",
+        "hobbies": ["Gaming", "Gym", "Movies"]
+      }
+    },
+    {
+      "id": "scan-6",
+      "name": "Prateek Bhatt",
+      "avatar": "https://images.unsplash.com/photo-1463453091185-61582044d556?auto=format&fit=crop&w=400&q=80",
+      "isVerified": true,
+      "studentIdPrefix": "GEU-MBA-2023",
+      "college": "GEU",
+      "course": "MBA",
+      "year": "2nd Year",
+      "matchPercentage": 94,
+      "matchHighlight": {
+        "icon": "book",
+        "text": "94% Match • Case Studies & Calm"
+      },
+      "lookingFor": "Turner Road 1BHK/2BHK",
+      "bio": "Management student at GEU. Value professionalism, personal space, and clean common areas.",
+      "isOnline": false,
+      "preferences": {
+        "sleepCycle": "Early Bird (11pm - 6:30am)",
+        "diet": "Vegetarian",
+        "smoking": "Non-Smoker",
+        "studyHabit": "Silent study",
+        "cleanliness": "High",
+        "budget": "₹8,500 - ₹12,000 /mo",
+        "hobbies": ["Case Studies", "Tennis", "Podcasts"]
+      }
+    },
+    {
+      "id": "scan-7",
+      "name": "Tushar Pant",
+      "avatar": "https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=400&q=80",
+      "isVerified": true,
+      "studentIdPrefix": "GEHU-ECE-2023",
+      "college": "GEHU",
+      "course": "B.Tech ECE",
+      "year": "2nd Year",
+      "matchPercentage": 94,
+      "matchHighlight": {
+        "icon": "zap",
+        "text": "94% Match • Early Bird & Hardware"
+      },
+      "lookingFor": "Subhash Nagar",
+      "bio": "ECE student working on IoT projects. Looking for an early riser flatmate who enjoys peace.",
+      "isOnline": true,
+      "preferences": {
+        "sleepCycle": "Early Bird (10:30pm - 6am)",
+        "diet": "Pure Vegetarian",
+        "smoking": "Non-Smoker",
+        "studyHabit": "Quiet room",
+        "cleanliness": "High",
+        "budget": "₹7,000 - ₹9,000 /mo",
+        "hobbies": ["Arduino", "Cycling", "Chess"]
+      }
+    },
+    {
+      "id": "scan-8",
+      "name": "Harshvardhan Chauhan",
+      "avatar": "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=400&q=80",
+      "isVerified": true,
+      "studentIdPrefix": "GEU-BTECH-2022",
+      "college": "GEU",
+      "course": "B.Tech Mechanical",
+      "year": "3rd Year",
+      "matchPercentage": 94,
+      "matchHighlight": {
+        "icon": "leaf",
+        "text": "94% Match • Non-Smoker & Runner"
+      },
+      "lookingFor": "Bell Road Flats",
+      "bio": "3rd year mechanical. Love morning runs around Graphic Era stadium. Looking for a neat flatmate.",
+      "isOnline": false,
+      "preferences": {
+        "sleepCycle": "Early Bird (10pm - 5:30am)",
+        "diet": "Vegetarian",
+        "smoking": "Non-Smoker",
+        "studyHabit": "Regular daily study",
+        "cleanliness": "High",
+        "budget": "₹6,500 - ₹9,000 /mo",
+        "hobbies": ["Marathon", "AutoCAD", "Music"]
+      }
+    },
+    {
+      "id": "scan-9",
+      "name": "Abhishek Dobhal",
+      "avatar": "https://images.unsplash.com/photo-1480429370139-e0132c086e2a?auto=format&fit=crop&w=400&q=80",
+      "isVerified": true,
+      "studentIdPrefix": "GEHU-CSE-2024",
+      "college": "GEHU",
+      "course": "B.Tech CSE (AI/ML)",
+      "year": "1st Year",
+      "matchPercentage": 94,
+      "matchHighlight": {
+        "icon": "zap",
+        "text": "94% Match • Python & Vegetarian"
+      },
+      "lookingFor": "Clement Town PGs",
+      "bio": "AI/ML branch fresher. Searching for a flatmate who is focused, friendly, and non-smoker.",
+      "isOnline": true,
+      "preferences": {
+        "sleepCycle": "11pm - 6:30am",
+        "diet": "Pure Vegetarian",
+        "smoking": "Non-Smoker",
+        "studyHabit": "Quiet study",
+        "cleanliness": "Regular",
+        "budget": "₹7,500 - ₹9,500 /mo",
+        "hobbies": ["Machine Learning", "Anime", "Guitar"]
+      }
+    },
+    {
+      "id": "scan-10",
+      "name": "Raghav Semwal",
+      "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80",
+      "isVerified": true,
+      "studentIdPrefix": "GEU-BCA-2023",
+      "college": "GEU",
+      "course": "BCA",
+      "year": "2nd Year",
+      "matchPercentage": 94,
+      "matchHighlight": {
+        "icon": "gamepad",
+        "text": "94% Match • Web Dev & Chill"
+      },
+      "lookingFor": "Turner Road PGs",
+      "bio": "Web developer building SaaS projects. Looking for flatmates to split a spacious flat near market.",
+      "isOnline": true,
+      "preferences": {
+        "sleepCycle": "12am - 7:30am",
+        "diet": "Vegetarian",
+        "smoking": "No Smoking in Room",
+        "studyHabit": "Coding with lofi",
+        "cleanliness": "Moderate",
+        "budget": "₹7,000 - ₹9,000 /mo",
+        "hobbies": ["Next.js", "Cricket", "Cooking"]
+      }
+    },
+    {
+      "id": "scan-11",
+      "name": "Shivansh Thapliyal",
+      "avatar": "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=400&q=80",
+      "isVerified": true,
+      "studentIdPrefix": "GEHU-CIVIL-2022",
+      "college": "GEHU",
+      "course": "B.Tech Civil",
+      "year": "3rd Year",
+      "matchPercentage": 94,
+      "matchHighlight": {
+        "icon": "sparkles",
+        "text": "94% Match • Calm & Clean Living"
+      },
+      "lookingFor": "Subhash Nagar Lane 3",
+      "bio": "Senior civil engineering student. Very disciplined, looking for a studious flatmate.",
+      "isOnline": false,
+      "preferences": {
+        "sleepCycle": "Early Bird (10pm - 6am)",
+        "diet": "Pure Vegetarian",
+        "smoking": "Non-Smoker",
+        "studyHabit": "Quiet study",
+        "cleanliness": "Very High",
+        "budget": "₹6,000 - ₹8,000 /mo",
+        "hobbies": ["Surveying", "Photography", "Football"]
+      }
+    },
+    {
+      "id": "scan-12",
+      "name": "Gaurav Kandari",
+      "avatar": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80",
+      "isVerified": true,
+      "studentIdPrefix": "GEU-BTECH-2024",
+      "college": "GEU",
+      "course": "B.Tech IT",
+      "year": "1st Year",
+      "matchPercentage": 94,
+      "matchHighlight": {
+        "icon": "leaf",
+        "text": "94% Match • Pure Veg & Respectful"
+      },
+      "lookingFor": "Near GEU Main Gate",
+      "bio": "IT fresher at GEU. Need a non-smoking roommate who prefers peace and clean rooms.",
+      "isOnline": true,
+      "preferences": {
+        "sleepCycle": "Early Bird (11pm - 6am)",
+        "diet": "Pure Vegetarian",
+        "smoking": "Strict Non-Smoker",
+        "studyHabit": "Silent study",
+        "cleanliness": "High",
+        "budget": "₹7,000 - ₹9,000 /mo",
+        "hobbies": ["Cricket", "Trekking", "Coding"]
+      }
+    }
+  ]
+}
