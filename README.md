@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Roomify — Graphic Era Student Co-Living & Roommate Finder
 
-## Getting Started
+> **Target Scope:** Graphic Era Hill University (GEHU Bell Road) & Graphic Era University (GEU Main Campus), Dehradun, Uttarakhand.
 
-First, run the development server:
+Roomify is a minimal, modern responsive full-stack platform designed specifically for Graphic Era students in Dehradun. It features verified PG/hostel discovery with live bed configurations and WhatsApp booking inquiry redirection, plus a deterministic roommate compatibility matching engine with duplex real-time chat.
 
+---
+
+## 🚀 Quick Start
+
+### 1. Prerequisites
+- Node.js 20+
+- Docker (for PostgreSQL 16)
+
+### 2. Database Setup
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Start PostgreSQL (or run docker container)
+docker start pg-dev
+
+# Push Prisma schema and seed initial data
+npx prisma db push
+npx prisma db seed
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Run Automated E2E Verification
+Verify the deterministic roommate matching algorithm, constraint gates, and request-to-conversation flow:
+```bash
+npx tsx scripts/verify-e2e.ts
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 4. Start the Application
+Run both the Next.js frontend/API and the companion WebSocket daemon:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# Terminal 1: Real-Time WebSocket Daemon (Port 3001)
+npm run dev:ws
 
-## Learn More
+# Terminal 2: Next.js App Router (Port 3000)
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📚 Documentation & Technical Guides
 
-## Deploy on Vercel
+- **[Backend Architecture & Engineering Guide](server/README.md):** Complete documentation on database models, stateful cookie sessions, REST APIs, WebSocket protocol, and matching formulas.
+- **[Stage 1 System Design Blueprint](file:///home/kartikey-xq/.gemini/antigravity-cli/brain/443cb59d-4032-4753-820f-0001adbfc0de/roomify_backend_architecture_blueprint.md):** In-depth technical specification, ER diagram, storage analysis, and architectural trade-offs.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🔑 Pre-Seeded Student Personas (Default Password: `Password@123`)
+
+Use the **Switch** button in the top navigation bar to 1-click test between these accounts:
+
+| Student Name | Email | Campus & Course | Lifestyle Traits |
+| :--- | :--- | :--- | :--- |
+| **Kartikey Joshi** (Student A) | `kartikey@gehu.ac.in` | GEHU • B.Tech CSE (2nd Yr) | Early Bird • Pure Veg • Daily High • Same Gender Only |
+| **Aarav Sharma** (Student B) | `aarav@gehu.ac.in` | GEHU • B.Tech CSE (2nd Yr) | Early Bird • Pure Veg • Daily High • Same Gender Only (**98% Match with A**) |
+| **Rohan Verma** (Student C) | `rohan@geu.ac.in` | GEU Main • BCA (1st Yr) | Night Owl • Non-Veg • Gamer |
+| **Priya Nautiyal** (Student D) | `priya@gehu.ac.in` | GEHU • B.Tech ECE (3rd Yr) | Flexible • Vegetarian • Turner Road |
+| **Admin** | `admin@roomify.in` | Directorate Staff | Admin Role (Password: `Admin@123`) |
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend:** Next.js 16.4.6 (App Router, Turbopack, React 19), Tailwind CSS 4, Lucide React, GSAP animations.
+- **Backend:** Node.js, Next.js Route Handlers, PostgreSQL 16, Prisma ORM 6.19.
+- **Real-Time:** Standalone Node.js `ws` WebSocket server (port 3001) sharing Prisma client.
+- **Authentication:** Cookie-backed stateful sessions (SHA-256 tokens in DB, `HttpOnly`, `SameSite=lax`), `bcryptjs`.
+- **Validation:** Zod schemas on all API boundaries.
