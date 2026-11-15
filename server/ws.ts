@@ -3,6 +3,7 @@ import http from "http";
 import url from "url";
 import prisma from "../lib/db/prisma";
 import { hashToken } from "../lib/auth/session";
+import { formatChatTime } from "../lib/utils/date";
 
 const PORT = parseInt(process.env.PORT || process.env.WS_PORT || "3001", 10);
 const HOST = "0.0.0.0";
@@ -344,13 +345,7 @@ wss.on("connection", (ws: WebSocket, req: http.IncomingMessage) => {
             data: { lastMessageAt: new Date() },
           });
 
-          const timeFormatted = new Date(savedMessage.createdAt).toLocaleTimeString(
-            [],
-            {
-              hour: "2-digit",
-              minute: "2-digit",
-            }
-          );
+          const timeFormatted = formatChatTime(savedMessage.createdAt);
 
           const broadcastPayload = {
             type: "NEW_MESSAGE",
@@ -376,6 +371,7 @@ wss.on("connection", (ws: WebSocket, req: http.IncomingMessage) => {
               tempId,
               messageId: savedMessage.id,
               time: timeFormatted,
+              createdAt: savedMessage.createdAt.toISOString(),
             })
           );
 

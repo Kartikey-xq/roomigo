@@ -20,6 +20,7 @@ import { Roommate } from "@/types/roommate";
 import ReportBlockModal, { ReportData } from "@/components/ReportBlockModal";
 import { useAuth } from "@/components/AuthContext";
 import AuthGatekeeper from "@/components/AuthGatekeeper";
+import { formatChatTime, formatDateIST } from "@/lib/utils/date";
 
 export interface ChatRoommate extends Roommate {
   otherUserId?: string;
@@ -43,6 +44,7 @@ interface ApiConversation {
   lastMessage?: {
     text: string;
     time: string;
+    createdAt?: string;
     isDelivered: boolean;
   };
 }
@@ -69,6 +71,7 @@ interface ChatMessage {
   sender: "me" | "them";
   text: string;
   time: string;
+  createdAt?: string;
   isDelivered?: boolean;
 }
 
@@ -154,7 +157,8 @@ export default function ChatPage() {
             lastMessage: c.lastMessage
               ? {
                   text: c.lastMessage.text,
-                  time: c.lastMessage.time,
+                  time: formatChatTime(c.lastMessage.createdAt || c.lastMessage.time),
+                  createdAt: c.lastMessage.createdAt,
                   isDelivered: c.lastMessage.isDelivered,
                   unreadCount: 0,
                 }
@@ -203,7 +207,7 @@ export default function ChatPage() {
               text: "92% Match • Student Request",
             },
             requestMessage: r.requestMessage,
-            requestedAt: new Date(r.createdAt).toLocaleDateString(),
+            requestedAt: formatDateIST(r.createdAt),
             lookingFor: "Bell Road PGs",
             bio: r.senderProfile?.bio || "",
             isOnline: true,
@@ -274,7 +278,7 @@ export default function ChatPage() {
 
             // Handle ACK for messages sent by this client (replace tempId with real DB message ID)
             if (data.type === "MESSAGE_ACK") {
-              const { tempId, messageId, time } = data;
+              const { tempId, messageId, time, createdAt } = data;
               if (tempId && messageId) {
                 setConversations((prev) => {
                   let changed = false;
@@ -283,10 +287,14 @@ export default function ChatPage() {
                     const idx = list.findIndex((m) => m.id === tempId);
                     if (idx !== -1) {
                       const updated = [...list];
+                      const resolvedTime = createdAt
+                        ? formatChatTime(createdAt)
+                        : (time ? formatChatTime(time) : updated[idx].time);
                       updated[idx] = {
                         ...updated[idx],
                         id: messageId,
-                        time: time || updated[idx].time,
+                        time: resolvedTime,
+                        createdAt: createdAt || updated[idx].createdAt,
                       };
                       next[convId] = updated;
                       changed = true;
@@ -301,6 +309,7 @@ export default function ChatPage() {
 
             if (data.type === "NEW_MESSAGE") {
               const msg = data.message;
+              const displayTime = msg.createdAt ? formatChatTime(msg.createdAt) : formatChatTime(msg.time);
               const currentUserId = userRef.current?.id;
               // Correctly determine sender using fresh userRef
               const isMe = currentUserId ? msg.senderId === currentUserId : false;
@@ -327,7 +336,8 @@ export default function ChatPage() {
                       id: msg.id,
                       sender: "me",
                       text: msg.text,
-                      time: msg.time,
+                      time: displayTime,
+                      createdAt: msg.createdAt,
                       isDelivered: msg.isDelivered,
                     };
                     return {
@@ -346,7 +356,8 @@ export default function ChatPage() {
                       id: msg.id,
                       sender,
                       text: msg.text,
-                      time: msg.time,
+                      time: displayTime,
+                      createdAt: msg.createdAt,
                       isDelivered: msg.isDelivered,
                     },
                   ],
@@ -361,7 +372,8 @@ export default function ChatPage() {
                         ...c,
                         lastMessage: {
                           text: msg.text,
-                          time: msg.time,
+                          time: displayTime,
+                          createdAt: msg.createdAt,
                           isDelivered: true,
                           unreadCount: 0,
                         },
@@ -480,11 +492,16 @@ export default function ChatPage() {
 
             // Filter unique incoming messages by ID
             const seenIds = new Set<string>();
-            const uniqueIncoming = (data.data as ChatMessage[]).filter((m) => {
-              if (seenIds.has(m.id)) return false;
-              seenIds.add(m.id);
-              return true;
-            });
+            const uniqueIncoming = (data.data as ChatMessage[])
+              .filter((m) => {
+                if (seenIds.has(m.id)) return false;
+                seenIds.add(m.id);
+                return true;
+              })
+              .map((m) => ({
+                ...m,
+                time: formatChatTime(m.createdAt || m.time),
+              }));
 
             // Keep optimistic messages only if the server hasn't saved the exact text yet
             const unresolvedOptimistic = pendingOptimistic.filter(
@@ -522,12 +539,15 @@ export default function ChatPage() {
     const textToSend = inputText.trim();
     if (!textToSend || !selectedChatId) return;
 
-    const tempId = "user-" + Date.now();
+    const now = new Date();
+    const tempId = "user-" + now.getTime();
+    const formattedNow = formatChatTime(now);
     const newMsg: ChatMessage = {
       id: tempId,
       sender: "me",
       text: textToSend,
-      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      time: formattedNow,
+      createdAt: now.toISOString(),
       isDelivered: true,
     };
 
@@ -561,7 +581,14 @@ export default function ChatPage() {
               return {
                 ...prev,
                 [selectedChatId]: list.map((m) =>
-                  m.id === tempId ? { ...m, id: data.data.id } : m
+                  m.id === tempId
+                    ? {
+                        ...m,
+                        id: data.data.id,
+                        time: formatChatTime(data.data.createdAt || data.data.time),
+                        createdAt: data.data.createdAt,
+                      }
+                    : m
                 ),
               };
             });
@@ -578,7 +605,8 @@ export default function ChatPage() {
               ...c,
               lastMessage: {
                 text: textToSend,
-                time: "Just now",
+                time: formattedNow,
+                createdAt: now.toISOString(),
                 isDelivered: true,
                 unreadCount: 0,
               },
@@ -892,7 +920,7 @@ export default function ChatPage() {
                         msg.sender === "me" ? "text-emerald-700 font-medium" : "text-zinc-400"
                       }`}
                     >
-                      {msg.time}
+                      {formatChatTime(msg.createdAt || msg.time)}
                       {msg.sender === "me" && (
                         <CheckCheck className="w-3.5 h-3.5 text-emerald-600" />
                       )}
@@ -1051,7 +1079,7 @@ export default function ChatPage() {
 
                   <div className="flex flex-col items-end gap-1.5 shrink-0 ml-2">
                     <span className="text-[11px] text-zinc-400 font-mono">
-                      {chat.lastMessage?.time || "Now"}
+                      {formatChatTime(chat.lastMessage?.createdAt || chat.lastMessage?.time) || "Now"}
                     </span>
                     {chat.lastMessage?.unreadCount ? (
                       <span className="w-5 h-5 rounded-full bg-emerald-600 text-white font-bold text-[10px] flex items-center justify-center shadow-xs">

@@ -29,6 +29,7 @@ export interface Roommate {
   lastMessage?: {
     text: string;
     time: string;
+    createdAt?: string;
     isDelivered: boolean;
     unreadCount: number;
   };

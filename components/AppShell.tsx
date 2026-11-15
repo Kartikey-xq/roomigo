@@ -14,6 +14,8 @@ import {
   ChevronRight,
   Compass,
   UserCircle2,
+  Sparkles,
+  ArrowRight,
 } from "lucide-react";
 import { useAuth } from "./AuthContext";
 import AccountSwitcherModal from "./AccountSwitcherModal";
@@ -48,8 +50,9 @@ export const NAV_ITEMS = [
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isAccountSwitcherOpen, setIsAccountSwitcherOpen] = useState(false);
-  const { profile, user, unreadCount } = useAuth();
+  const { profile, user, unreadCount, isLoading } = useAuth();
   const pathname = usePathname();
+  const isLaunchPage = pathname === "/launch";
 
   const overlayRef = useRef<HTMLDivElement>(null);
   const sidebarRef = useRef<HTMLElement>(null);
@@ -220,55 +223,82 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           </div>
 
           {/* Center: Current Screen Pill */}
-          <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50/80 border border-emerald-200/70 text-xs text-zinc-600">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span>Active Screen:</span>
-            <span className="font-semibold text-emerald-900 flex items-center gap-1.5">
-              <currentItem.icon className="w-3.5 h-3.5 text-emerald-600" />
-              {currentItem.name}
-            </span>
-          </div>
+          {isLaunchPage ? (
+            <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50/80 border border-emerald-200/70 text-xs text-zinc-600">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="font-semibold text-emerald-900 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                PWA Launch &amp; Walkthrough
+              </span>
+            </div>
+          ) : (
+            <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50/80 border border-emerald-200/70 text-xs text-zinc-600">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>Active Screen:</span>
+              <span className="font-semibold text-emerald-900 flex items-center gap-1.5">
+                <currentItem.icon className="w-3.5 h-3.5 text-emerald-600" />
+                {currentItem.name}
+              </span>
+            </div>
+          )}
 
           {/* Right: Quick Actions */}
           <div className="flex items-center gap-2 sm:gap-3">
-            <button
-              onClick={() => setIsOpen(true)}
-              className="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-white hover:bg-emerald-50 text-zinc-700 hover:text-emerald-800 border border-zinc-200 shadow-xs transition-colors"
-            >
-              <span>Side Menu</span>
-              <kbd className="px-1.5 py-0.5 text-[10px] font-mono bg-zinc-100 rounded border border-zinc-200 text-zinc-500">
-                ⌘M
-              </kbd>
-            </button>
-
-            <button
-              onClick={() => setIsAccountSwitcherOpen(true)}
-              className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 shadow-2xs transition-all active:scale-95 cursor-pointer"
-              title="Switch between Graphic Era test accounts"
-            >
-              <UserCircle2 className="w-4 h-4 text-emerald-700" />
-              <span className="hidden sm:inline">Switch</span>
-            </button>
-
-            {user ? (
+            {isLaunchPage ? (
               <Link
-                href="/profile"
-                className="flex items-center gap-2 pl-2 pr-2.5 py-1 rounded-full bg-white hover:bg-emerald-50 border border-zinc-200 shadow-xs transition-colors"
+                href="/listings"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs transition-colors"
               >
-                <div className="w-6 h-6 rounded-full bg-emerald-600 flex items-center justify-center text-[11px] font-bold text-white shadow-xs">
-                  {profile?.fullName ? profile.fullName.charAt(0).toUpperCase() : user.email.charAt(0).toUpperCase()}
-                </div>
-                <span className="text-xs font-medium text-zinc-700 hidden sm:inline-block">
-                  {profile?.fullName ? profile.fullName.split(" ")[0] : "Profile"}
-                </span>
+                <span>Open Web App</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             ) : (
-              <Link
-                href="/login"
-                className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs transition-colors"
-              >
-                <span>Sign In</span>
-              </Link>
+              <>
+                <button
+                  onClick={() => setIsOpen(true)}
+                  className="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-white hover:bg-emerald-50 text-zinc-700 hover:text-emerald-800 border border-zinc-200 shadow-xs transition-colors"
+                >
+                  <span>Side Menu</span>
+                  <kbd className="px-1.5 py-0.5 text-[10px] font-mono bg-zinc-100 rounded border border-zinc-200 text-zinc-500">
+                    ⌘M
+                  </kbd>
+                </button>
+
+                <button
+                  onClick={() => setIsAccountSwitcherOpen(true)}
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 shadow-2xs transition-all active:scale-95 cursor-pointer"
+                  title="Switch between Graphic Era test accounts"
+                >
+                  <UserCircle2 className="w-4 h-4 text-emerald-700" />
+                  <span className="hidden sm:inline">Switch</span>
+                </button>
+
+                {isLoading ? (
+                  <div
+                    aria-hidden="true"
+                    className="h-7 w-20 rounded-full bg-zinc-100 animate-pulse border border-zinc-200/60"
+                  />
+                ) : user ? (
+                  <Link
+                    href="/profile"
+                    className="flex items-center gap-2 pl-2 pr-2.5 py-1 rounded-full bg-white hover:bg-emerald-50 border border-zinc-200 shadow-xs transition-colors"
+                  >
+                    <div className="w-6 h-6 rounded-full bg-emerald-600 flex items-center justify-center text-[11px] font-bold text-white shadow-xs">
+                      {profile?.fullName ? profile.fullName.charAt(0).toUpperCase() : user.email.charAt(0).toUpperCase()}
+                    </div>
+                    <span className="text-xs font-medium text-zinc-700 hidden sm:inline-block">
+                      {profile?.fullName ? profile.fullName.split(" ")[0] : "Profile"}
+                    </span>
+                  </Link>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs transition-colors"
+                  >
+                    <span>Sign In</span>
+                  </Link>
+                )}
+              </>
             )}
           </div>
         </div>
@@ -374,21 +404,45 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
               </Link>
             );
           })}
+
+          <div className="pt-2 border-t border-zinc-100">
+            <Link
+              href="/launch"
+              onClick={() => setIsOpen(false)}
+              className="gsap-nav-item group flex items-center gap-3.5 p-3 rounded-2xl bg-emerald-50/70 hover:bg-emerald-100/70 border border-emerald-200/60 text-emerald-900 transition-colors"
+            >
+              <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                <Sparkles className="w-4 h-4" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-emerald-950">Install PWA &amp; Demo</p>
+                <p className="text-[11px] text-emerald-700 truncate">Watch video walkthrough &amp; install app</p>
+              </div>
+              <ChevronRight className="w-4 h-4 text-emerald-600 shrink-0 group-hover:translate-x-0.5 transition-transform" />
+            </Link>
+          </div>
         </div>
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 pb-32">
+      <main
+        className={
+          isLaunchPage
+            ? "flex-1 w-full"
+            : "flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 pb-32"
+        }
+      >
         {children}
       </main>
 
       {/* Centered Fixed Wrapper for Bottom Navigation Bar */}
-      <div className="fixed bottom-4 sm:bottom-6 inset-x-0 z-30 flex justify-center pointer-events-none px-4">
-        <nav
-          ref={bottomBarRef}
-          aria-label="Bottom Navigation"
-          className="pointer-events-auto w-full max-w-lg"
-        >
+      {!isLaunchPage && (
+        <div className="fixed bottom-4 sm:bottom-6 inset-x-0 z-30 flex justify-center pointer-events-none px-4">
+          <nav
+            ref={bottomBarRef}
+            aria-label="Bottom Navigation"
+            className="pointer-events-auto w-full max-w-lg"
+          >
           <div className="relative p-1.5 sm:p-2 rounded-2xl sm:rounded-full bg-white/95 backdrop-blur-2xl border border-emerald-100/90 shadow-[0_12px_36px_rgba(16,185,129,0.12),0_4px_16px_rgba(0,0,0,0.06)] flex items-center justify-between gap-1">
             {/* Quick Nav Items */}
             {NAV_ITEMS.map((item) => {
@@ -452,6 +506,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           </div>
         </nav>
       </div>
+      )}
       {/* Account Switcher & Login Modal */}
       <AccountSwitcherModal
         isOpen={isAccountSwitcherOpen}

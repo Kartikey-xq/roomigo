@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCurrentSession } from "@/lib/auth/session";
 import prisma from "@/lib/db/prisma";
+import { formatChatTime } from "@/lib/utils/date";
 
 export async function GET(
   _req: NextRequest,
@@ -69,11 +70,8 @@ export async function GET(
       sender: m.senderId === session.userId ? ("me" as const) : ("them" as const),
       senderId: m.senderId,
       text: m.text,
-      time: new Date(m.createdAt).toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-      createdAt: m.createdAt,
+      time: formatChatTime(m.createdAt),
+      createdAt: m.createdAt.toISOString(),
       isDelivered: m.isDelivered,
       isRead: m.isRead,
     }));
@@ -154,11 +152,8 @@ export async function POST(
         sender: "me",
         senderId: message.senderId,
         text: message.text,
-        time: new Date(message.createdAt).toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
-        createdAt: message.createdAt,
+        time: formatChatTime(message.createdAt),
+        createdAt: message.createdAt.toISOString(),
         isDelivered: true,
         isRead: false,
       },

@@ -14,7 +14,15 @@ export async function GET() {
 
   const profile = await prisma.studentProfile.findUnique({
     where: { userId: session.userId },
-    include: { roommatePreference: true },
+    include: {
+      roommatePreference: true,
+      user: {
+        select: {
+          email: true,
+          role: true,
+        },
+      },
+    },
   });
 
   return NextResponse.json({
